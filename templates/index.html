@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publication App</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f7f9fc;
+            margin-top: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            background: #fff;
+            transition: .5s;
+            border: 0;
+            margin-bottom: 30px;
+            border-radius: .75rem;
+            position: relative;
+            width: 100%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .pub-app .categories-list {
+            width: 280px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 20px;
+            z-index: 7;
+            background-color: #e9f5ff;
+            border-radius: .75rem 0 0 .75rem;
+        }
+
+        .pub-app .publications {
+            margin-left: 300px;
+            border-left: 1px solid #eaeaea;
+            background-color: #fff;
+            border-radius: 0 .75rem .75rem 0;
+            padding: 20px;
+        }
+
+        .categories-list .category-list li {
+            padding: 10px 15px;
+            list-style: none;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .categories-list .category-list li:hover {
+            background: #d0e7ff;
+        }
+
+        .categories-list .category-list li.active {
+            background: #b0d4ff;
+        }
+
+        .categories-list .category-list li .name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .publications .pub-header {
+            padding: 15px 20px;
+            border-bottom: 2px solid #f4f7f6;
+            background-color: #f1f4f8;
+            border-radius: .75rem .75rem 0 0;
+        }
+
+        .publications .pub-header .pub-about {
+            float: left;
+            padding-left: 10px;
+        }
+
+        .publications .pub-header .pub-about h6 {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+
+        .pub-history {
+            background-color: #f9fbfc;
+            padding: 20px;
+        }
+
+        .pub-item {
+            width: calc(33.33% - 20px); /* Adjust width for three columns */
+            margin: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            float: left; /* Ensure items stay in the same row */
+        }
+
+        .pub-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .pub-data {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .pub-data img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .pub-details {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .pub-details h6 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .pub-details p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .pub-data-time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .like-btn {
+            color: #007bff;
+            cursor: pointer;
+            float: right;
+        }
+
+        .pub-message {
+            padding: 20px;
+            background-color: #f1f4f8;
+            border-radius: 0 0 .75rem .75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .pub-message .input-group {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .pub-message .input-group .form-control {
+            border: none;
+            padding-left: 20px;
+            flex: 1;
+        }
+
+        .pub-message .input-group .btn {
+            border-radius: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .pub-message .input-group .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .clearfix:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: " ";
+            clear: both;
+            height: 0;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .pub-app .categories-list {
+                height: 465px;
+                width: 100%;
+                overflow-x: auto;
+                background: #fff;
+                left: -400px;
+                display: none;
+            }
+
+            .pub-app .categories-list.open {
+                left: 0;
+            }
+
+            .pub-app .publications {
+                margin: 0;
+            }
+
+            .pub-app .publications .pub-header {
+                border-radius: .75rem .75rem 0 0;
+            }
+
+            .pub-app .pub-history {
+                height: 300px;
+                overflow-x: auto;
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 992px) {
+            .pub-app .category-list {
+                height: 650px;
+                overflow-x: auto;
+            }
+
+            .pub-app .pub-history {
+                height: 600px;
+                overflow-x: auto;
+            }
+        }
+
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+            .pub-app .category-list {
+                height: 480px;
+                overflow-x: auto;
+            }
+
+            .pub-app .pub-history {
+                height: calc(100vh - 350px);
+                overflow-x: auto;
+            }
+        }
+
+        /* Three-column layout for larger screens */
+        @media only screen and (min-width: 768px) {
+            .pub-history ul {
+                display: flex;
+                flex-wrap: wrap;
+                margin: -10px; /* Adjust spacing between items */
+            }
+
+            .pub-item {
+                width: calc(33.33% - 20px); /* Adjust width for three columns */
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card pub-app">
+                    <div id="plist" class="categories-list">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search...">
+                        </div>
+                        <ul class="list-unstyled category-list mt-2 mb-0">
+                            <li class="clearfix">
+                                <div class="name">Family</div>
+                            </li>
+                            <li class="clearfix active">
+                                <div class="name">Friends</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name">Work</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name">Travel</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name">Hobbies</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="publications">
+                        <div class="pub-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="pub-about">
+                                        <h6 class="m-b-0">Publications</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pub-history">
+                            <ul class="m-b-0 clearfix">
+                                <li class="clearfix pub-item">
+                                    <div class="pub-data">
+                                        <img src="https://via.placeholder.com/150" alt="pub-image">
+                                        <div class="pub-details">
+                                            <h6>John Doe</h6>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            <span class="pub-data-time">10:10 AM, Today</span>
+                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="clearfix pub-item">
+                                    <div class="pub-data">
+                                        <img src="https://via.placeholder.com/150" alt="pub-image">
+                                        <div class="pub-details">
+                                            <h6>Jane Smith</h6>
+                                            <p>Nullam vitae libero eu diam faucibus vehicula. Nulla aliquet sagittis arcu.</p>
+                                            <span class="pub-data-time">10:15 AM, Today</span>
+                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="clearfix pub-item">
+                                    <div class="pub-data">
+                                        <img src="https://via.placeholder.com/150" alt="pub-image">
+                                        <div class="pub-details">
+                                            <h6>Emily Brown</h6>
+                                            <p>Vestibulum in suscipit mi, id convallis justo. Nullam malesuada mauris eros.</p>
+                                            <span class="pub-data-time">10:20 AM, Today</span>
+                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Add more li items for additional publications -->
+                            </ul>
+                        </div>
+                        <div class="pub-message clearfix">
+                            <div class="input-group mb-0">
+                                <input type="text" class="form-control" placeholder="Write something...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-send"></i> Post</button>
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-image"></i> Upload Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
