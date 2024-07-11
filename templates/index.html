@@ -301,8 +301,10 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Write something...">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button"><i class="fa fa-send"></i> Post</button>
-                                    <button class="btn btn-primary" type="button"><i class="fa fa-image"></i> Upload Image</button>
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-send"></i>
+                                        Post</button>
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-image"></i> Upload
+                                        Image</button>
                                 </div>
                             </div>
                         </div>
@@ -315,9 +317,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script>
+        console.log('rani dakhl script');
         async function show_pub(category) {
+            console.log(category);
+            console.log("json hehe ");
             try {
                 let response = await fetch('publications.json');
+                console.log('rani kmlt nfatchi ');
+                console.log(response);
                 if (!response.ok) {
                     throw new Error('Failed to fetch publications');
                 }
@@ -327,7 +334,7 @@
                 container.innerHTML = ''; // Clear previous content
 
                 // Filter publications based on the selected category
-                let filteredPublications = publications.filter(pub => pub.category === category);
+                let filteredPublications = publications //.filter(pub => pub.category === category);
 
                 // Iterate through filtered publications and create HTML elements
                 filteredPublications.forEach(pub => {
