@@ -90,13 +90,15 @@
         }
 
         .pub-item {
-            width: calc(33.33% - 20px); /* Adjust width for three columns */
+            width: calc(33.33% - 20px);
+            /* Adjust width for three columns */
             margin: 10px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
-            float: left; /* Ensure items stay in the same row */
+            float: left;
+            /* Ensure items stay in the same row */
         }
 
         .pub-item:hover {
@@ -247,11 +249,13 @@
             .pub-history ul {
                 display: flex;
                 flex-wrap: wrap;
-                margin: -10px; /* Adjust spacing between items */
+                margin: -10px;
+                /* Adjust spacing between items */
             }
 
             .pub-item {
-                width: calc(33.33% - 20px); /* Adjust width for three columns */
+                width: calc(33.33% - 20px);
+                /* Adjust width for three columns */
                 margin: 10px;
             }
         }
@@ -263,81 +267,38 @@
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card pub-app">
-                    <div id="plist" class="categories-list">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Search...">
-                        </div>
-                        <ul class="list-unstyled category-list mt-2 mb-0">
+                    <div class="categories-list">
+                        <ul class="category-list list-unstyled mt-2 mb-0">
                             <li class="clearfix">
-                                <div class="name">Family</div>
+                                <div class="name" onclick="show_pub('Family')">Family</div>
                             </li>
                             <li class="clearfix active">
-                                <div class="name">Friends</div>
+                                <div class="name" onclick="show_pub('Friends')">Friends</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name">Work</div>
+                                <div class="name" onclick="show_pub('Work')">Work</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name">Travel</div>
+                                <div class="name" onclick="show_pub('Travel')">Travel</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name">Hobbies</div>
+                                <div class="name" onclick="show_pub('Hobbies')">Hobbies</div>
                             </li>
                         </ul>
                     </div>
                     <div class="publications">
-                        <div class="pub-header clearfix">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="pub-about">
-                                        <h6 class="m-b-0">Publications</h6>
-                                    </div>
-                                </div>
+                        <div class="pub-header">
+                            <div class="pub-about">
+                                <h6>Publications</h6>
                             </div>
                         </div>
                         <div class="pub-history">
-                            <ul class="m-b-0 clearfix">
-                                <li class="clearfix pub-item">
-                                    <div class="pub-data">
-                                        <img src="https://via.placeholder.com/150" alt="pub-image">
-                                        <div class="pub-details">
-                                            <h6>John Doe</h6>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                            <span class="pub-data-time">10:10 AM, Today</span>
-                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="clearfix pub-item">
-                                    <div class="pub-data">
-                                        <img src="https://via.placeholder.com/150" alt="pub-image">
-                                        <div class="pub-details">
-                                            <h6>Jane Smith</h6>
-                                            <p>Nullam vitae libero eu diam faucibus vehicula. Nulla aliquet sagittis arcu.</p>
-                                            <span class="pub-data-time">10:15 AM, Today</span>
-                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="clearfix pub-item">
-                                    <div class="pub-data">
-                                        <img src="https://via.placeholder.com/150" alt="pub-image">
-                                        <div class="pub-details">
-                                            <h6>Emily Brown</h6>
-                                            <p>Vestibulum in suscipit mi, id convallis justo. Nullam malesuada mauris eros.</p>
-                                            <span class="pub-data-time">10:20 AM, Today</span>
-                                            <span class="like-btn"><i class="fa fa-thumbs-up"></i> Like</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- Add more li items for additional publications -->
+                            <ul class="m-b-0 clearfix" id="pub_cont">
+                                <!-- Publication items will be dynamically added here -->
                             </ul>
                         </div>
                         <div class="pub-message clearfix">
-                            <div class="input-group mb-0">
+                            <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Write something...">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button"><i class="fa fa-send"></i> Post</button>
@@ -350,8 +311,80 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script>
+        async function show_pub(category) {
+            try {
+                let response = await fetch('publications.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch publications');
+                }
+                let publications = await response.json();
+
+                let container = document.querySelector('#pub_cont');
+                container.innerHTML = ''; // Clear previous content
+
+                // Filter publications based on the selected category
+                let filteredPublications = publications.filter(pub => pub.category === category);
+
+                // Iterate through filtered publications and create HTML elements
+                filteredPublications.forEach(pub => {
+                    // Create list item
+                    let list_item = document.createElement('li');
+                    list_item.className = "clearfix pub-item";
+
+                    // Create publication data container
+                    let pub_data = document.createElement('div');
+                    pub_data.className = "pub-data";
+
+                    // Create image element
+                    let img = document.createElement('img');
+                    img.src = pub.image || 'https://via.placeholder.com/150'; // Use placeholder if image URL is not provided
+                    img.alt = "pub-image";
+                    pub_data.appendChild(img);
+
+                    // Create publication details container
+                    let pub_details = document.createElement('div');
+                    pub_details.className = "pub-details";
+
+                    // Create author name
+                    let author_name = document.createElement('h6');
+                    author_name.textContent = pub.author;
+                    pub_details.appendChild(author_name);
+
+                    // Create description paragraph
+                    let description = document.createElement('p');
+                    description.textContent = pub.description;
+                    pub_details.appendChild(description);
+
+                    // Create timestamp span
+                    let timestamp = document.createElement('span');
+                    timestamp.className = "pub-data-time";
+                    timestamp.textContent = new Date(pub.timestamp).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                    pub_details.appendChild(timestamp);
+
+                    // Create like button span
+                    let like_btn = document.createElement('span');
+                    like_btn.className = "like-btn";
+                    like_btn.innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+                    pub_details.appendChild(like_btn);
+
+                    // Append details to publication data container
+                    pub_data.appendChild(pub_details);
+
+                    // Append publication data container to list item
+                    list_item.appendChild(pub_data);
+
+                    // Append list item to container
+                    container.appendChild(list_item);
+                });
+            } catch (error) {
+                console.error('Error fetching publications:', error);
+            }
+        }
+    </script>
 </body>
 
 </html>

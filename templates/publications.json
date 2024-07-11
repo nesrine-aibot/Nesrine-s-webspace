@@ -1,0 +1,37 @@
+[
+    {
+        "author": "John Doe",
+        "category": "Family",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "timestamp": "2024-07-11T10:10:00Z",
+        "image": "https://via.placeholder.com/150"
+    },
+    {
+        "author": "Jane Smith",
+        "category": "Friends",
+        "description": "Nullam vitae libero eu diam faucibus vehicula. Nulla aliquet sagittis arcu.",
+        "timestamp": "2024-07-11T10:15:00Z",
+        "image": "https://via.placeholder.com/150"
+    },
+    {
+        "author": "Emily Brown",
+        "category": "Work",
+        "description": "Vestibulum in suscipit mi, id convallis justo. Nullam malesuada mauris eros.",
+        "timestamp": "2024-07-11T10:20:00Z",
+        "image": "https://via.placeholder.com/150"
+    },
+    {
+        "author": "Mark Johnson",
+        "category": "Travel",
+        "description": "Cras vitae magna id nisl aliquam convallis nec nec ex.",
+        "timestamp": "2024-07-11T10:25:00Z",
+        "image": "https://via.placeholder.com/150"
+    },
+    {
+        "author": "Sarah White",
+        "category": "Hobbies",
+        "description": "Donec venenatis vestibulum libero sed egestas. Aliquam a lorem ac tortor malesuada consectetur.",
+        "timestamp": "2024-07-11T10:30:00Z",
+        "image": "https://via.placeholder.com/150"
+    }
+]
