@@ -269,20 +269,33 @@
                 <div class="card pub-app">
                     <div class="categories-list">
                         <ul class="category-list list-unstyled mt-2 mb-0">
+
                             <li class="clearfix">
-                                <div class="name" onclick="show_pub('Family')">Family</div>
-                            </li>
-                            <li class="clearfix active">
-                                <div class="name" onclick="show_pub('Friends')">Friends</div>
+                                <div class="name" id="Work" onclick="show_pub('Work')">Work</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name" onclick="show_pub('Work')">Work</div>
+                                <div class="name" id="Skills" onclick="show_pub('Skills')">Skills</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name" onclick="show_pub('Travel')">Travel</div>
+                                <div class="name" id="Programming" onclick="show_pub('Programming')">Programming</div>
                             </li>
                             <li class="clearfix">
-                                <div class="name" onclick="show_pub('Hobbies')">Hobbies</div>
+                                <div class="name" id="Achivements" onclick="show_pub('Achivements')">Achivements</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name" id="ideas" onclick="show_pub('ideas')">project ideas</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name" id="AI" onclick="show_pub('AI')">AI things</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name" id="Hackathons" onclick="show_pub('Hackathons')">Hackathons</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name" id="Family" onclick="show_pub('Family')">Family</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="name" id="Travel" onclick="show_pub('Travel')">Travel</div>
                             </li>
                         </ul>
                     </div>
@@ -299,12 +312,12 @@
                         </div>
                         <div class="pub-message clearfix">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Write something...">
+                                <!-- <input type="text" class="form-control" placeholder="Write something..."> -->
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button"><i class="fa fa-send"></i>
-                                        Post</button>
-                                    <button class="btn btn-primary" type="button"><i class="fa fa-image"></i> Upload
-                                        Image</button>
+                                        <a href="form.html">Post</a></button>
+                                    <!-- <button class="btn btn-primary" type="button"><i class="fa fa-image"></i> Upload
+                                        Image</button> -->
                                 </div>
                             </div>
                         </div>
@@ -319,12 +332,19 @@
     <script>
         console.log('rani dakhl script');
         async function show_pub(category) {
-            console.log(category);
-            console.log("json hehe ");
+
+            let categories = document.querySelectorAll('.category-list li');
+            categories.forEach(cat => {
+                if (cat.querySelector('.name').textContent === category) {
+                    cat.classList.add('active');
+                } else {
+                    cat.classList.remove('active');
+                }
+            });
+
             try {
                 let response = await fetch('publications.json');
-                console.log('rani kmlt nfatchi ');
-                console.log(response);
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch publications');
                 }
@@ -334,7 +354,7 @@
                 container.innerHTML = ''; // Clear previous content
 
                 // Filter publications based on the selected category
-                let filteredPublications = publications //.filter(pub => pub.category === category);
+                let filteredPublications = publications.filter(pub => pub.category === category);
 
                 // Iterate through filtered publications and create HTML elements
                 filteredPublications.forEach(pub => {
