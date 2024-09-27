@@ -2,7 +2,7 @@ from flask import Flask, render_template , send_from_directory
 
 app = Flask(__name__)
 
-
+# this is just a dump comment to ssay hello it's meeee
 @app.route('/')
 def index():
   return render_template('index.html')
